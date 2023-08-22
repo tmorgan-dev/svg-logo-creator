@@ -1,5 +1,16 @@
 {
+  "name": "svg-logo-creator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "inquirer": "^9.2.10"
+    "inquirer": "^8.2.6",
+    "jest": "^29.6.3"
   }
 }
