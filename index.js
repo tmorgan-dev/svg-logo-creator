@@ -33,14 +33,14 @@ const questions = [
         type: "list",
         name: "shape",
         message: "Choose a shape for your logo",
-        choices: ["Circle", "Square", "Triangle",],
+        choices: ["Circle", "Square", "Triangle"],
     }
 ];
 
 function writeToFile(fileName, data) {
     const filePath = path.join(fileName)
     fs.writeFile(filePath, data, (err) =>
-        err ? console.error(err) : console.log(`Logo generated! @:${filePath}`)
+        err ? console.error(err) : console.log(`Generated logo.svg`)
     );
 }
 
