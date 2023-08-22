@@ -37,20 +37,14 @@ const questions = [
     }
 ];
 
-function writeToFile(fileName, data) {
-    const filePath = path.join(fileName)
-    fs.writeFile(filePath, data, (err) =>
-        err ? console.error(err) : console.log(`Generated logo.svg`)
-    );
-}
-
+init();
 function init() {
     console.log("Welcome To your logo generator!")
     inquirer
         .prompt(questions)
         .then((answers) => {
             console.log("My logo Info", answers)
-            const logoData = generateMarkdown({ ...answers })
+            const logoData = generateSvgFile({ ...answers })
             writeToFile("logo.svg", logoData)
         })
         .catch((error) => {
@@ -60,4 +54,9 @@ function init() {
         });
 }
 
-init();
+function writeToFile(fileName, data) {
+    const filePath = path.join(fileName)
+    fs.writeFile(filePath, data, (err) =>
+        err ? console.error(err) : console.log(`Generated logo.svg`)
+    );
+}
