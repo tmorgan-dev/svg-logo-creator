@@ -13,16 +13,24 @@
 // WHEN I open the `logo.svg` file in a browser
 // THEN I am shown a 300x200 pixel image that matches the criteria I entered
 
-const generateSvgFile = require("./lib/generatesvgfile")
 const fs = require("fs")
 const inquirer = require("inquirer")
 const path = require("path")
+const Circle = require("./lib/circle")
+const Square = require("./lib/square")
+const Triangle = require("./lib/triangle")
+const Svg = require("./lib/svg")
 
 const questions = [
     {
         type: "input",
         name: "text",
         message: "Enter up to three characters for the logo",
+    },
+    {
+        type: "input",
+        name: "textColor",
+        message: "What color should the text be?",
     },
     {
         type: "input",
@@ -44,8 +52,27 @@ function init() {
         .prompt(questions)
         .then((answers) => {
             console.log("My logo Info", answers)
-            const logoData = generateSvgFile({ ...answers })
-            writeToFile("logo.svg", logoData)
+            let logo;
+            switch(answers.shape) {
+                case "Circle":
+                logo = new Circle()
+                break;
+                case "Square":
+                    logo = new Square()
+                    break;
+                    case "Triangle":
+                        logo = new Triangle()
+                        break;
+            }
+            logo.setColor(answers.color)
+            const newLogo = new Svg()
+            newLogo.setShape(logo)
+            newLogo.setTxt(answers.text, answers.textColor)
+            console.log("hello", newLogo)
+            if (answers.text.length > 3) {
+                console.log("Must be less than three characters")
+            }
+            writeToFile("Logo.svg", newLogo.createSvg())
         })
         .catch((error) => {
             if (error.isTtyError) {
@@ -55,6 +82,7 @@ function init() {
 }
 
 function writeToFile(fileName, data) {
+    console.log("here")
     const filePath = path.join(fileName)
     fs.writeFile(filePath, data, (err) =>
         err ? console.error(err) : console.log(`Generated logo.svg`)
